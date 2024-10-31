@@ -35,6 +35,7 @@ export default function FormBuilder() {
       title: 'Title',
       description: 'Description',
       layout: { width: 'full' },
+      items: {},
     };
 
     if (type === 'array') {
@@ -72,7 +73,7 @@ export default function FormBuilder() {
     const required: string[] = [];
 
     fields.forEach((field) => {
-      const { id, type, title, description, isRequired, propertyName, layout, ...rest } = field;
+      const { id, type, title, description, isRequired, propertyName, ...rest } = field;
       const name = propertyName || id;
       properties[name] = {
         type,
