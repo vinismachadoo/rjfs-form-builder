@@ -89,21 +89,21 @@ export function FormField({ field, onUpdate, onRemove, parentField }: FormFieldP
     }
   };
 
-  const addNestedProperty = () => {
-    if (field.type === 'object') {
-      const timestamp = Date.now();
-      const properties = field.properties || {};
-      onUpdate(field.id, {
-        properties: {
-          ...properties,
-          [`field_${timestamp}`]: {
-            type: 'string',
-            title: 'New Field',
-          },
-        },
-      });
-    }
-  };
+  // const addNestedProperty = () => {
+  //   if (field.type === 'object') {
+  //     const timestamp = Date.now();
+  //     const properties = field.properties || {};
+  //     onUpdate(field.id, {
+  //       properties: {
+  //         ...properties,
+  //         [`field_${timestamp}`]: {
+  //           type: 'string',
+  //           title: 'New Field',
+  //         },
+  //       },
+  //     });
+  //   }
+  // };
 
   return (
     <Accordion type="single" collapsible>
