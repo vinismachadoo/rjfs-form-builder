@@ -22,7 +22,7 @@ interface FormFieldOptions {
 export const formFieldOptions: FormFieldOptions[] = [
   { type: FieldTypes.string, title: 'Text', icon: TextCursorInput },
   { type: FieldTypes.number, title: 'Number', icon: Hash },
-  { type: FieldTypes.checkbox, title: 'Checkbox', icon: CheckSquare },
+  // { type: FieldTypes.checkbox, title: 'Checkbox', icon: CheckSquare },
   // { type: 'multiselect', title: 'Multi Select', icon: List },
   // { type: 'object', title: 'Object', icon: Box },
 ];
@@ -41,60 +41,68 @@ export function FormField({ field, onUpdate, onRemove, parentField }: FormFieldP
   };
 
   const addArrayOption = () => {
-    const options = field.items?.enum || [];
-    const optionLabels = field.items?.enumNames || [];
-    onUpdate(field.id, {
-      items: {
-        ...field.items,
-        enum: [...options, `option_${options.length + 1}`],
-        enumNames: [...optionLabels, `Option ${options.length + 1}`],
-      },
-    });
+    if (field.type === 'array') {
+      const options = field.items?.enum || [];
+      const optionLabels = field.items?.enumNames || [];
+      onUpdate(field.id, {
+        items: {
+          ...field.items,
+          enum: [...options, `option_${options.length + 1}`],
+          enumNames: [...optionLabels, `Option ${options.length + 1}`],
+        },
+      });
+    }
   };
 
   const updateArrayOption = (index: number, value: string, isLabel = false) => {
-    const options = [...(field.items?.enum || [])];
-    const optionLabels = [...(field.items?.enumNames || [])];
+    if (field.type === 'array') {
+      const options = [...(field.items?.enum || [])];
+      const optionLabels = [...(field.items?.enumNames || [])];
 
-    if (isLabel) {
-      optionLabels[index] = value;
-    } else {
-      options[index] = value;
+      if (isLabel) {
+        optionLabels[index] = value;
+      } else {
+        options[index] = value;
+      }
+
+      onUpdate(field.id, {
+        items: {
+          ...field.items,
+          enum: options,
+          enumNames: optionLabels,
+        },
+      });
     }
-
-    onUpdate(field.id, {
-      items: {
-        ...field.items,
-        enum: options,
-        enumNames: optionLabels,
-      },
-    });
   };
 
   const removeArrayOption = (index: number) => {
-    const options = field.items?.enum || [];
-    const optionLabels = field.items?.enumNames || [];
-    onUpdate(field.id, {
-      items: {
-        ...field.items,
-        enum: options.filter((_: any, i: number) => i !== index),
-        enumNames: optionLabels.filter((_: any, i: number) => i !== index),
-      },
-    });
+    if (field.type === 'array') {
+      const options = field.items?.enum || [];
+      const optionLabels = field.items?.enumNames || [];
+      onUpdate(field.id, {
+        items: {
+          ...field.items,
+          enum: options.filter((_: any, i: number) => i !== index),
+          enumNames: optionLabels.filter((_: any, i: number) => i !== index),
+        },
+      });
+    }
   };
 
   const addNestedProperty = () => {
-    const timestamp = Date.now();
-    const properties = field.properties || {};
-    onUpdate(field.id, {
-      properties: {
-        ...properties,
-        [`field_${timestamp}`]: {
-          type: 'string',
-          title: 'New Field',
+    if (field.type === 'object') {
+      const timestamp = Date.now();
+      const properties = field.properties || {};
+      onUpdate(field.id, {
+        properties: {
+          ...properties,
+          [`field_${timestamp}`]: {
+            type: 'string',
+            title: 'New Field',
+          },
         },
-      },
-    });
+      });
+    }
   };
 
   return (
@@ -222,7 +230,7 @@ export function FormField({ field, onUpdate, onRemove, parentField }: FormFieldP
               </div>
             )}
 
-            {field.type === 'object' && (
+            {/* {field.type === 'object' && (
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <Label>Nested Properties</Label>
@@ -251,7 +259,7 @@ export function FormField({ field, onUpdate, onRemove, parentField }: FormFieldP
                   ))}
                 </div>
               </div>
-            )}
+            )} */}
 
             <div className="flex items-center space-x-2">
               <Checkbox

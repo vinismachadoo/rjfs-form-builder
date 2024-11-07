@@ -14,7 +14,7 @@ import { closestCenter, DndContext, DragEndEvent } from '@dnd-kit/core';
 import { arrayMove, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { Code } from 'lucide-react';
 import { useState } from 'react';
-import { FormField as FormFieldType } from '@/types/form-field';
+import { FieldTypes, FormField as FormFieldType } from '@/types/form-field';
 
 export default function FormBuilder() {
   const [fields, setFields] = useState<any[]>([]);
@@ -22,7 +22,7 @@ export default function FormBuilder() {
 
   const addField = (type: string) => {
     const timestamp = Date.now();
-    const newField: FormFieldType = {
+    const newField = {
       id: `field-${timestamp}`,
       propertyName: `field_${timestamp}`,
       type,
@@ -124,7 +124,7 @@ export default function FormBuilder() {
           <Button
             key={`${fieldType.type}-${fieldType.title}`}
             variant="ghost"
-            className={cn('w-full justify-start', sortableFieldVariants({ variant: fieldType.type }))}
+            className={cn('w-full justify-start', sortableFieldVariants({ variant: fieldType.type as any }))}
             onClick={() => addField(fieldType.type)}
             disabled={fieldType.disabled}
           >

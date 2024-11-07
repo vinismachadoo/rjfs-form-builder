@@ -15,7 +15,7 @@ const sortableFieldVariants = cva('relative border rounded-sm hover:opacity-90',
         'bg-[theme(colors.yellow.400/.1)] text-[theme(colors.yellow.500)] border-[theme(colors.yellow.300)]',
       [FieldTypes.number]:
         'bg-[theme(colors.teal.400/.1)] text-[theme(colors.teal.500)] border-[theme(colors.teal.300)]',
-      [FieldTypes.checkbox]:
+      [FieldTypes.array]:
         'bg-[theme(colors.pink.400/.1)] text-[theme(colors.pink.500)] border-[theme(colors.pink.300)]',
     },
   },
