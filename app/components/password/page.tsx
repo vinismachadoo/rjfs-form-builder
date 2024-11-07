@@ -1,5 +1,3 @@
-'use client';
-
 import { FormRJSF } from '@/components/form-rjsf/form-rjsf';
 import { toast } from 'sonner';
 
