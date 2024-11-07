@@ -29,6 +29,7 @@ export default function FormBuilder() {
       title: 'Title',
       description: 'Description',
       layout: { width: 'full' },
+      items: {} as any,
     };
 
     if (type === 'array') {
