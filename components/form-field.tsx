@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { FieldTypes, FormField as FormFieldType } from '@/types/form-field';
-import { CheckSquare, Hash, LayoutGrid, LucideIcon, Minus, Plus, TextCursorInput, Trash2 } from 'lucide-react';
+import { Hash, LayoutGrid, LucideIcon, Minus, Plus, TextCursorInput, Trash2 } from 'lucide-react';
 import React from 'react';
 
 interface FormFieldOptions {

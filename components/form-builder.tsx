@@ -14,7 +14,6 @@ import { closestCenter, DndContext, DragEndEvent } from '@dnd-kit/core';
 import { arrayMove, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { Code } from 'lucide-react';
 import { useState } from 'react';
-import { FieldTypes, FormField as FormFieldType } from '@/types/form-field';
 
 export default function FormBuilder() {
   const [fields, setFields] = useState<any[]>([]);
