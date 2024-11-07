@@ -2,9 +2,12 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme-provider';
-import { ModeToggle } from '@/components/mode-toggle';
 import { StyleSwitcher } from '@/components/style-switcher';
 import { TailwindIndicator } from '@/components/tailwind-indicator';
+import { Header } from '@/components/header';
+import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
+import { AppSidebar } from '@/components/sidebar/app-sidebar';
+import { Toaster } from '@/components/ui/sonner';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,13 +21,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <header className="flex h-12 border-b shrink-0 items-center justify-between gap-2 px-4 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
-            <div></div>
-            <ModeToggle />
-          </header>
-          <div className="flex flex-1 flex-col gap-4 h-svh">{children}</div>
+          <SidebarProvider defaultOpen={true} className="h-full">
+            <AppSidebar />
+            <SidebarInset>
+              <Header />
+              {children}
+            </SidebarInset>
+          </SidebarProvider>
           <StyleSwitcher />
           <TailwindIndicator />
+          <Toaster richColors />
         </ThemeProvider>
       </body>
     </html>

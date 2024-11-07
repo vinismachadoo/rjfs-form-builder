@@ -1,26 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import { FormField } from '@/components/form-field';
-import { SortableField } from '@/components/sortable-field';
+import { FormField, formFieldOptions } from '@/components/form-field';
+import { FormRJSF } from '@/components/form-rjsf/form-rjsf';
+import { SortableField, sortableFieldVariants } from '@/components/sortable-field';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { cn } from '@/lib/utils';
 import { closestCenter, DndContext, DragEndEvent } from '@dnd-kit/core';
 import { arrayMove, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
-import { FormRJSF as Form } from '@/components/form-rjsf';
-import validator from '@rjsf/validator-ajv8';
-import { Code, PlusCircle } from 'lucide-react';
+import { Code } from 'lucide-react';
 import { useState } from 'react';
-
-const FIELD_TYPES = [
-  { type: 'string', title: 'Text Input', icon: 'type' },
-  { type: 'number', title: 'Number Input', icon: 'hash' },
-  { type: 'boolean', title: 'Checkbox', icon: 'check-square' },
-  { type: 'array', title: 'Multi Select', icon: 'list' },
-  { type: 'object', title: 'Object', icon: 'box' },
-];
+import { FormField as FormFieldType } from '@/types/form-field';
 
 export default function FormBuilder() {
   const [fields, setFields] = useState<any[]>([]);
@@ -28,14 +22,13 @@ export default function FormBuilder() {
 
   const addField = (type: string) => {
     const timestamp = Date.now();
-    const newField = {
+    const newField: FormFieldType = {
       id: `field-${timestamp}`,
       propertyName: `field_${timestamp}`,
       type,
       title: 'Title',
       description: 'Description',
       layout: { width: 'full' },
-      items: {},
     };
 
     if (type === 'array') {
@@ -73,7 +66,8 @@ export default function FormBuilder() {
     const required: string[] = [];
 
     fields.forEach((field) => {
-      const { id, type, title, description, isRequired, propertyName, ...rest } = field;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { id, type, title, description, isRequired, propertyName, layout, ...rest } = field;
       const name = propertyName || id;
       properties[name] = {
         type,
@@ -112,7 +106,7 @@ export default function FormBuilder() {
                   : 'col-span-12'
               }`}
             >
-              <SortableField field={field} onUpdate={updateField} onRemove={removeField}>
+              <SortableField variant={field.type} field={field} onUpdate={updateField} onRemove={removeField}>
                 <FormField field={field} onUpdate={updateField} onRemove={removeField} />
               </SortableField>
             </div>
@@ -123,37 +117,34 @@ export default function FormBuilder() {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-      <div className="lg:col-span-3">
-        <Card className="p-4">
-          <h2 className="text-lg font-semibold mb-4">Field Types</h2>
-          <div className="space-y-2">
-            {FIELD_TYPES.map((fieldType) => (
-              <Button
-                key={fieldType.type}
-                variant="outline"
-                className="w-full justify-start"
-                onClick={() => addField(fieldType.type)}
-              >
-                <PlusCircle className="w-4 h-4 mr-2" />
-                {fieldType.title}
-              </Button>
-            ))}
-          </div>
-        </Card>
+    <div className="h-full grid grid-cols-1 lg:grid-cols-12">
+      <div className="flex flex-col p-4 h-full border-r gap-y-2 lg:col-span-2">
+        {formFieldOptions.map((fieldType) => (
+          <Button
+            key={`${fieldType.type}-${fieldType.title}`}
+            variant="ghost"
+            className={cn('w-full justify-start', sortableFieldVariants({ variant: fieldType.type }))}
+            onClick={() => addField(fieldType.type)}
+            disabled={fieldType.disabled}
+          >
+            <fieldType.icon className="w-4 h-4 mr-2" />
+            {fieldType.title}
+            {fieldType.badge && <Badge>{fieldType.badge}</Badge>}
+          </Button>
+        ))}
       </div>
 
-      <div className="lg:col-span-9">
+      <div className="lg:col-span-10 p-4">
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="builder">Form Builder</TabsTrigger>
-            <TabsTrigger value="preview">Preview & JSON</TabsTrigger>
+            <TabsTrigger value="preview">JSON Schema</TabsTrigger>
           </TabsList>
 
           <TabsContent value="builder">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <Card className="p-4">
-                <ScrollArea className="h-[600px] pr-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              <Card className={cn('p-4', fields.length === 0 && 'border-dashed')}>
+                <ScrollArea className="h-full">
                   <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
                     <SortableContext items={fields} strategy={verticalListSortingStrategy}>
                       {renderFields()}
@@ -161,14 +152,16 @@ export default function FormBuilder() {
                   </DndContext>
 
                   {fields.length === 0 && (
-                    <div className="text-center py-12 text-gray-500">Drag and drop fields here to build your form</div>
+                    <div className="flex items-center justify-center h-full text-xs text-muted-foreground">
+                      Drag and drop fields here to build your form
+                    </div>
                   )}
                 </ScrollArea>
               </Card>
 
               <Card className="p-4">
-                <h3 className="text-lg font-semibold mb-4">Form Preview</h3>
-                {schema && <Form schema={schema} validator={validator} className="space-y-4" />}
+                <h3 className="font-semibold mb-4">Your form</h3>
+                {schema && <FormRJSF schema={schema} />}
               </Card>
             </div>
           </TabsContent>
@@ -189,7 +182,7 @@ export default function FormBuilder() {
                 </Button>
               </div>
               <pre className="bg-muted p-4 rounded-sm text-xs overflow-auto max-h-[500px]">
-                {JSON.stringify(schema, null, 2)}
+                {schema && JSON.stringify(schema, null, 2)}
               </pre>
             </Card>
           </TabsContent>

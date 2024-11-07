@@ -1,12 +1,20 @@
-import FormBuilder from '@/components/form-builder';
-
 export default function Home() {
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold text-center mb-8 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-        JSON Schema Form Builder
-      </h1>
-      <FormBuilder />
-    </div>
+    <main className="flex flex-col h-full min-h-0 w-full min-w-0">
+      basic input
+      <li>text input ✅</li>
+      <li>number input ✅</li>
+      <li>date input</li>
+      <li>hour input</li>
+      single choice input
+      <li>select input</li>
+      <li>checkbox input</li>
+      multiple choice input
+      <li>multiselect ✅</li>
+      <li>checkbox group</li>
+      boolean input
+      <li>checkbox</li>
+      <li>switch</li>
+    </main>
   );
 }

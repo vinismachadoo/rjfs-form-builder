@@ -9,8 +9,8 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '
 
 interface ComboboxOption {
   label: React.ReactNode;
+  value: string;
   filterValue: string;
-  value: string | any;
   [key: string]: any;
 }
 
@@ -64,7 +64,7 @@ const Combobox = React.forwardRef<HTMLButtonElement, ComboboxProps>(
             disabled={disabled}
             ref={ref}
           >
-            <span className="shrink text-left">
+            <span className={cn('shrink text-left font-normal', !value && 'text-muted-foreground')}>
               {value ? options?.find((option) => option.value === value)?.label : placeholder}
             </span>
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />

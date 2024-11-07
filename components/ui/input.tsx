@@ -15,7 +15,8 @@ const Addon = ({ children, className, error, onClickAddon }: AddonProps) => (
   <div
     onClick={onClickAddon && onClickAddon}
     className={cn(
-      'addon-wrapper border-default [input:hover_+_&]:border-[theme(colors.red.500)] [input:hover_+_&]:border-l-default [&:has(+_input:hover)]:border-emphasis [&:has(+_input:hover)]:border-r-default h-full border px-0 overflow-hidden shrink-0 group-hover:border-ring/30 disabled:group-hover:border-border',
+      'h-full px-0 overflow-hidden shrink-0',
+      'group-hover:border-ring/30 disabled:group-hover:border-border',
       onClickAddon && 'cursor-pointer disabled:hover:cursor-not-allowed',
       className
     )}
@@ -51,7 +52,11 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="group relative flex items-center rounded-sm h-8">
         {addOnLeading && (
-          <Addon className={cn('rounded-l-sm h-full text-xs', addOnLeadingClassname)}>{addOnLeading}</Addon>
+          <Addon
+            className={cn('rounded-l-sm h-[inherit] border border-r-0 text-xs bg-transparent', addOnLeadingClassname)}
+          >
+            {addOnLeading}
+          </Addon>
         )}
         <input
           type={type}
@@ -66,7 +71,11 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           {...props}
         />
         {addOnSuffix && (
-          <Addon className={cn('rounded-r-sm h-full text-xs', addOnSuffixClassname)}>{addOnSuffix}</Addon>
+          <Addon
+            className={cn('rounded-r-sm h-[inherit] border border-l-0 text-xs bg-transparent', addOnSuffixClassname)}
+          >
+            {addOnSuffix}
+          </Addon>
         )}
       </div>
     );
