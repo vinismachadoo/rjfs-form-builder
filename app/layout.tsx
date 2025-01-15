@@ -8,6 +8,7 @@ import { Header } from '@/components/header';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/sidebar/app-sidebar';
 import { Toaster } from '@/components/ui/sonner';
+import Footer from '@/components/footer';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -26,6 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <SidebarInset>
               <Header />
               {children}
+              <Footer />
             </SidebarInset>
           </SidebarProvider>
           <StyleSwitcher />

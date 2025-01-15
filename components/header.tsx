@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { Button } from './ui/button';
 import { ModeToggle } from '@/components/mode-toggle';
 import { MainNav } from '@/components/main-nav';
-import { Twitter } from 'lucide-react';
+import { GithubIcon } from 'lucide-react';
 
 export const Header = () => {
   return (
@@ -13,10 +13,10 @@ export const Header = () => {
           {/* <MobileNav /> */}
         </div>
         <div className="flex items-center gap-x-4">
-          <Link target="_blank" href="https://x.com/ovinisanches">
+          <Link target="_blank" href="https://github.com/vinismachadoo">
             <Button variant="outline">
-              <Twitter className="size-4" />
-              Follow on twitter
+              <GithubIcon className="size-4" />
+              Follow on github
             </Button>
           </Link>
           <ModeToggle />

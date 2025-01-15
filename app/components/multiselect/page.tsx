@@ -1,6 +1,7 @@
 'use client';
 
 import { FormRJSF } from '@/components/form-rjsf/form-rjsf';
+import { SchemaCode } from '@/components/schema-code';
 import { toast } from 'sonner';
 
 const page = () => {
@@ -9,11 +10,11 @@ const page = () => {
     properties: {
       multipleChoicesList: {
         type: 'array',
-        title: 'Select the items you want to display in the sidebar.',
+        title: 'Select the items you want to display in the sidebar:',
         items: {
           type: 'string',
-          enum: ['Recents', 'Home', 'Applications', 'Desktop', 'Downloads', 'Documents'],
-          enumNames: ['Recents', 'Home', 'Applications', 'Desktop', 'Downloads', 'Documents'],
+          enum: ['playground', 'models', 'documentation', 'settings', 'sales', 'travel'],
+          enumNames: ['Playground', 'Models', 'Documentation', 'Settings', 'Sales', 'Travel'],
         },
         uniqueItems: true,
       },
@@ -21,12 +22,8 @@ const page = () => {
   };
 
   return (
-    <div className="grid grid-cols-2 gap-x-4 p-4">
-      <div className="border rounded-sm p-4">
-        <pre className="text-xs">
-          <code>{JSON.stringify(schema, null, 2)}</code>
-        </pre>
-      </div>
+    <div className="grid grid-cols-2 gap-x-4 p-4 h-full">
+      <SchemaCode schema={schema} />
       <FormRJSF
         schema={schema}
         onSubmit={({ formData }) =>

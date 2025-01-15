@@ -39,3 +39,10 @@ export function extractUIPropsFromSchema(schema: RJSFSchema, props: string[]) {
 
   return result;
 }
+
+export function onlyDigitsInput(value: string, conditions: boolean) {
+  if (conditions) {
+    return value.replace(/[^0-9]/g, '').trim();
+  }
+  return value.trim();
+}

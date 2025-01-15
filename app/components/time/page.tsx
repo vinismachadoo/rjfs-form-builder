@@ -1,30 +1,27 @@
 'use client';
 
 import { FormRJSF } from '@/components/form-rjsf/form-rjsf';
+import { SchemaCode } from '@/components/schema-code';
 import { toast } from 'sonner';
 
 const page = () => {
   const schema = {
     type: 'object',
     properties: {
-      textInput: {
+      timeInput: {
         type: 'string',
-        title: 'First name',
-        description: 'Last name: Norris',
-        placeholder: 'Chuck',
-        minLength: 3,
+        title: 'Choose your time slot',
+        description: 'When do you want to schedule your appointment?',
+        default: '10:00',
+        format: 'time',
       },
     },
     required: ['textInput'],
   };
 
   return (
-    <div className="grid grid-cols-2 gap-x-4 p-4">
-      <div className="border rounded-sm p-4">
-        <pre className="text-xs">
-          <code>{JSON.stringify(schema, null, 2)}</code>
-        </pre>
-      </div>
+    <div className="grid grid-cols-2 gap-x-4 p-4 h-full">
+      <SchemaCode schema={schema} />
       <FormRJSF
         schema={schema}
         onSubmit={({ formData }) =>

@@ -65,6 +65,7 @@ export const CustomPasswordWidget = (props: WidgetProps) => {
           aria-label={isVisible ? 'Hide password' : 'Show password'}
           aria-pressed={isVisible}
           aria-controls="password"
+          className="hover:bg-transparent"
         >
           {isVisible ? <EyeOff className="size-3" aria-hidden="true" /> : <Eye className="size-3" aria-hidden="true" />}
         </Button>

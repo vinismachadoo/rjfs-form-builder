@@ -3,6 +3,7 @@
 
 import { Checkbox } from '@/components/ui/checkbox';
 import Combobox from '@/components/ui/combobox';
+import { Label } from '@/components/ui/label';
 import { MultiSelect } from '@/components/ui/multi-select';
 import { WidgetProps } from '@rjsf/utils';
 
@@ -36,7 +37,7 @@ export const CustomSelectWidget = (props: WidgetProps) => {
             }
           }}
         />
-        <span className="text-xs">{opt.label}</span>
+        <Label className="text-xs font-normal">{opt.label}</Label>
       </div>
     ));
   }
@@ -48,8 +49,8 @@ export const CustomSelectWidget = (props: WidgetProps) => {
           ...opt,
         }))}
         placeholder={placeholder}
-        searchPlaceholder="Procure..."
-        emptyState="Nenhuma resultado"
+        searchPlaceholder="Search..."
+        emptyState="No results"
         value={value}
         onValueChange={onChange}
         className="w-full"
@@ -66,8 +67,8 @@ export const CustomSelectWidget = (props: WidgetProps) => {
         filterValue: opt.label,
       }))}
       placeholder={placeholder}
-      searchPlaceholder="Procure..."
-      emptyState="Nenhuma resultado"
+      searchPlaceholder="Search..."
+      emptyState="No results"
       value={value}
       onValueChange={(v) => onChange(v.value)}
       className="w-full"

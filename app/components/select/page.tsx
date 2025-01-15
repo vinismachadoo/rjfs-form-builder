@@ -1,31 +1,28 @@
 'use client';
 
 import { FormRJSF } from '@/components/form-rjsf/form-rjsf';
+import { SchemaCode } from '@/components/schema-code';
 import { toast } from 'sonner';
 
 const page = () => {
   const schema = {
     type: 'object',
     properties: {
-      layoutImpressao: {
+      fruits: {
         type: 'string',
-        title: 'Layout impressão',
+        title: 'Fruits',
         placeholder: 'Select one',
-        description: 'Layout de impressão da etiqueta Correios',
-        enum: ['PADRAO', 'LINEAR_100_150'],
-        enumNames: ['Padrao', 'Linear 100 150'],
+        description: 'Select your favorite fruit',
+        enum: ['apple', 'banana', 'cherry'],
+        enumNames: ['🍎 Apple', '🍌 Banana', '🍒 Cherry'],
       },
     },
-    required: ['layoutImpressao'],
+    required: ['fruits'],
   };
 
   return (
-    <div className="grid grid-cols-2 gap-x-4 p-4">
-      <div className="border rounded-sm p-4">
-        <pre className="text-xs">
-          <code>{JSON.stringify(schema, null, 2)}</code>
-        </pre>
-      </div>
+    <div className="grid grid-cols-2 gap-x-4 p-4 h-full">
+      <SchemaCode schema={schema} />
       <FormRJSF
         schema={schema}
         onSubmit={({ formData }) =>

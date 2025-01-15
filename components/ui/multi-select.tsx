@@ -31,9 +31,9 @@ const MultiSelect = ({
   options,
   value,
   title,
-  placeholder = 'Escolha uma opção',
-  searchPlaceholder = 'Pesquisar...',
-  emptyState = 'Nenhum resultado',
+  placeholder = 'Select an option',
+  searchPlaceholder = 'Search...',
+  emptyState = 'No results',
   className,
   contentClassName,
   contentAlign = 'center',
@@ -52,7 +52,13 @@ const MultiSelect = ({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className={cn('w-[200px] justify-between h-auto', className)}
+          className={cn(
+            'w-[200px] justify-between h-auto font-normal',
+            {
+              'text-muted-foreground': selectedLabels?.length === 0,
+            },
+            className
+          )}
           disabled={disabled}
         >
           {title}
@@ -62,7 +68,7 @@ const MultiSelect = ({
               <div className="hidden space-x-1 lg:flex">
                 {selectedLabels.length > 1 ? (
                   <Badge variant="secondary" className="rounded-sm px-1 font-normal whitespace-nowrap">
-                    {selectedLabels.length} selecionados
+                    {selectedLabels.length} selected
                   </Badge>
                 ) : (
                   selectedLabels

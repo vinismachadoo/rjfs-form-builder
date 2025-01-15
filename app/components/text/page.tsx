@@ -1,6 +1,7 @@
 'use client';
 
 import { FormRJSF } from '@/components/form-rjsf/form-rjsf';
+import { SchemaCode } from '@/components/schema-code';
 import { toast } from 'sonner';
 
 const page = () => {
@@ -14,17 +15,20 @@ const page = () => {
         placeholder: 'Chuck',
         minLength: 3,
       },
+      onlyNumbersInput: {
+        type: 'string',
+        title: 'Document number',
+        description: 'Try typing letters',
+        placeholder: '1234567890',
+        style: 'numeric',
+      },
     },
-    required: ['textInput'],
+    required: ['textInput', 'onlyNumbersInput'],
   };
 
   return (
-    <div className="grid grid-cols-2 gap-x-4 p-4">
-      <div className="border rounded-sm p-4">
-        <pre className="text-xs">
-          <code>{JSON.stringify(schema, null, 2)}</code>
-        </pre>
-      </div>
+    <div className="grid grid-cols-2 gap-x-4 p-4 h-full">
+      <SchemaCode schema={schema} />
       <FormRJSF
         schema={schema}
         onSubmit={({ formData }) =>
