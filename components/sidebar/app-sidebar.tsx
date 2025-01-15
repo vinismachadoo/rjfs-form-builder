@@ -13,11 +13,16 @@ import {
   Hash,
   Loader,
   MousePointerClick,
+  SlidersHorizontal,
   SquareAsterisk,
   SquareCheck,
+  Tally5,
   TextCursorInput,
   ToggleRight,
 } from 'lucide-react';
+
+type ComponentConfig = typeof config.components;
+type ComponentKeys = keyof ComponentConfig;
 
 export const config = {
   dashboard: [
@@ -33,23 +38,18 @@ export const config = {
     icon: Blocks,
   },
   components: {
-    basics: {
-      title: 'Basics',
+    string: {
+      title: 'String',
       items: [
         {
-          name: 'Text',
-          url: '/components/text',
+          name: 'Basic Text',
+          url: '/components/basic-text',
           icon: TextCursorInput,
         },
         {
-          name: 'Number',
-          url: '/components/number',
-          icon: Hash,
-        },
-        {
-          name: 'Select',
-          url: '/components/select',
-          icon: MousePointerClick,
+          name: 'Numeric Text',
+          url: '/components/numeric-text',
+          icon: Tally5,
         },
         {
           name: 'Email',
@@ -61,6 +61,26 @@ export const config = {
           url: '/components/password',
           icon: SquareAsterisk,
         },
+      ],
+    },
+    numbers: {
+      title: 'Numbers',
+      items: [
+        {
+          name: 'Number Input',
+          url: '/components/number-input',
+          icon: Hash,
+        },
+        {
+          name: 'Number Slider',
+          url: '/components/number-slider',
+          icon: SlidersHorizontal,
+        },
+      ],
+    },
+    dates: {
+      title: 'Dates',
+      items: [
         {
           name: 'Date',
           url: '/components/date',
@@ -70,6 +90,16 @@ export const config = {
           name: 'Time',
           url: '/components/time',
           icon: Clock,
+        },
+      ],
+    },
+    options: {
+      title: 'Options',
+      items: [
+        {
+          name: 'Select',
+          url: '/components/select',
+          icon: MousePointerClick,
         },
         {
           name: 'Radio group',
@@ -115,47 +145,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarContent>
-        <NavComponents components={config.components.basics.items} title={config.components.basics.title} />
-        <NavComponents components={config.components.booleans.items} title={config.components.booleans.title} />
-        <NavComponents components={config.components.arrays.items} title={config.components.arrays.title} />
-
-        {/* <SidebarGroup>
-          <SidebarMenu>
-            {config.map((item) =>
-              item.items ? (
-                <Collapsible key={item.title} asChild defaultOpen={true} className="group/collapsible">
-                  <SidebarMenuItem>
-                    <CollapsibleTrigger asChild>
-                      <SidebarMenuButton tooltip={item.title}>
-                        {item.icon && <item.icon />}
-                        <span className="font-medium whitespace-nowrap">{item.title}</span>
-                        <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-                      </SidebarMenuButton>
-                    </CollapsibleTrigger>
-                    <CollapsibleContent>
-                      <SidebarMenuSub>
-                        {item.items?.map((subItem) => (
-                          <SidebarMenuSubItem key={subItem.title} className="cursor-pointer">
-                            <SidebarMenuSubButton onClick={() => router.push(`${item.url}/${subItem.url}`)}>
-                              <span className="text-xs">{subItem.title}</span>
-                            </SidebarMenuSubButton>
-                          </SidebarMenuSubItem>
-                        ))}
-                      </SidebarMenuSub>
-                    </CollapsibleContent>
-                  </SidebarMenuItem>
-                </Collapsible>
-              ) : (
-                <SidebarMenuItem key={item.title} className="cursor-pointer">
-                  <SidebarMenuButton tooltip={item.title} onClick={() => router.push(`${item.url}`)}>
-                    {item.icon && <item.icon />}
-                    <span className="font-medium whitespace-nowrap">{item.title}</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              )
-            )}
-          </SidebarMenu>
-        </SidebarGroup> */}
+        {(Object.keys(config.components) as ComponentKeys[]).map((key) => (
+          <NavComponents key={key} components={config.components[key].items} title={config.components[key].title} />
+        ))}
       </SidebarContent>
       <SidebarRail />
     </Sidebar>

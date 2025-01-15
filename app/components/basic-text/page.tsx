@@ -8,17 +8,15 @@ const page = () => {
   const schema = {
     type: 'object',
     properties: {
-      numberInput: {
-        type: 'number',
-        title: 'Your age',
-        description: 'Adds or removes 1 by 1',
-        default: 0,
-        minimum: 18,
-        maximum: 65,
-        step: 1,
+      textInput: {
+        type: 'string',
+        title: 'First name',
+        description: 'Last name: Norris',
+        placeholder: 'Chuck',
+        minLength: 3,
       },
     },
-    required: ['numberInput'],
+    required: ['textInput'],
   };
 
   return (

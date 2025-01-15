@@ -8,22 +8,18 @@ const page = () => {
   const schema = {
     type: 'object',
     properties: {
-      textInput: {
-        type: 'string',
-        title: 'First name',
-        description: 'Last name: Norris',
-        placeholder: 'Chuck',
-        minLength: 3,
-      },
-      onlyNumbersInput: {
-        type: 'string',
-        title: 'Document number',
-        description: 'Try typing letters',
-        placeholder: '1234567890',
-        style: 'numeric',
+      numberInput: {
+        type: 'number',
+        title: 'Your age',
+        description: 'Adds or removes 1 by 1',
+        default: 21,
+        minimum: 18,
+        maximum: 65,
+        step: 1,
+        widget: 'range',
       },
     },
-    required: ['textInput', 'onlyNumbersInput'],
+    required: ['numberInput'],
   };
 
   return (

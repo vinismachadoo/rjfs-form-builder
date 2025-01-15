@@ -1,13 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
+import * as React from 'react';
+import { Button } from '@/components/ui/button';
 import { DatePicker } from '@/components/ui/date-picker';
 import { Input } from '@/components/ui/input';
 import { NumberInput } from '@/components/ui/number-input';
+import { Slider } from '@/components/ui/slider';
 import { TimeInput } from '@/components/ui/time-input';
 import { onlyDigitsInput } from '@/lib/utils';
 import { parseDate, parseTime } from '@internationalized/date';
 import { BaseInputTemplateProps, getInputProps } from '@rjsf/utils';
+import { Minus } from 'lucide-react';
 
 export function BaseInputTemplate(props: BaseInputTemplateProps) {
   const {
@@ -36,8 +39,6 @@ export function BaseInputTemplate(props: BaseInputTemplateProps) {
     ...rest
   } = props;
 
-  console.log('cro', props);
-
   const onTextChange = ({ target: { value: val } }: React.ChangeEvent<HTMLInputElement>) => {
     // Use the options.emptyValue if it is specified and newVal is also an empty string
     onChange(val === '' ? options.emptyValue || '' : val);
@@ -46,6 +47,27 @@ export function BaseInputTemplate(props: BaseInputTemplateProps) {
   const onTextFocus = ({ target: { value: val } }: React.FocusEvent<HTMLInputElement>) => onFocus(id, val);
 
   const inputProps = { ...rest, ...getInputProps(schema, type) };
+
+  if (type === 'range') {
+    return (
+      // hide the range-view span from the slider
+      <div className="flex gap-x-2 [&+span.range-view]:hidden">
+        <Slider
+          disabled={inputProps.disabled}
+          id={id}
+          defaultValue={[schema?.default]}
+          value={[value]}
+          onValueChange={(value) => {
+            onChange(value[0]);
+          }}
+          step={schema.step || 1}
+          min={inputProps.min}
+          max={inputProps.max}
+        />
+        <output className="text-xs font-medium tabular-nums">{value}</output>
+      </div>
+    );
+  }
 
   if (schema.type === 'number') {
     return (
