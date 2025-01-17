@@ -11,7 +11,12 @@ export const CustomRadioWidget = (props: WidgetProps) => {
     props;
 
   return (
-    <RadioGroup defaultValue={schema.default} className={cn(options.inline && 'flex')}>
+    <RadioGroup
+      defaultValue={schema.default}
+      value={value}
+      onValueChange={onChange}
+      className={cn(options.inline && 'flex')}
+    >
       {options.enumOptions?.map((opt) => (
         <div key={opt.value} className="flex items-center space-x-2">
           <RadioGroupItem value={opt.value} id={opt.value} />
